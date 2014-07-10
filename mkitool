@@ -1,13 +1,38 @@
 #!/bin/bash
 #############################################################################
-# Program : Make it tool
-# Author : Chauncey Yan
-# Description : shoot the code to the /tool/bin
-# Revision : 1.0
-# Date : May 22st
-# Update : 
-# Known issue : 
+# Program		: Make it tool
+# Author 		: Chauncey Yan
+# Description 	: shoot the code to the /tool/bin
+# Revision 		: 1.1
+# Date 			: May 22st
+# Update 		: check the file executable
+# Known issue 	: 
 #############################################################################
+# Init 			:
+#############################################################################
+# Function		: check if the file executable
+#############################################################################
+checkfile(){
+	if [[ ! -f $1 ]];then
+		echo The file not exists
+		exit
+	else
+		if [[ ! -x $1 ]];then
+			echo "File is not executable. Press ENTER to make it executable(755)" 	
+			read c
+			if [[ -n $c ]];then
+				exit
+			else
+				chmod 755 $1
+			fi
+		fi
+	fi
+}
+
+#############################################################################
+# Main			:
+#############################################################################
+checkfile $1
 filename=`echo $1 | awk -F'/' '{print $NF}'`
 if [[ -n $2 ]];then
 	filename=$2
